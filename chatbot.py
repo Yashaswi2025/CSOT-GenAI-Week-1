@@ -43,7 +43,7 @@ def run_chatbot():
         # TODO: append the user turn to messages
         messages.append({"role": "user", "content": user_input})
         if (len(messages) > 100):
-            messsages = messages[-100:]
+            messages = messages[-100:]
         # TODO: call the API with the full messages list
         response = client.responses.create(
             model="openrouter/free",
