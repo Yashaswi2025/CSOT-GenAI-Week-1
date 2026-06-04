@@ -2,7 +2,11 @@
 
 ## Overview
 
-This project implements a terminal-based chatbot in Python using the OpenAI SDK and the OpenRouter API. The chatbot maintains conversation history, enabling coherent multi-turn interactions by resending previous messages with every API call.
+In this project, we are just having a look at how LLM API calls work.
+### Our main objectives:
+* Keeping the API Key secure
+* Take user input and obtain AI response
+* Keep a list of messages which is then used as input for the chatbot's next reply
 
 ---
 
@@ -18,7 +22,7 @@ from dotenv import load_dotenv
 
 * `os` is used to access environment variables.
 * `OpenAI` provides access to OpenRouter through an OpenAI-compatible interface.
-* `load_dotenv()` loads environment variables from a `.env` file.
+* `load_dotenv()` loads environment variables from a `.env` file (Refer to .env.example).
 
 ---
 
@@ -52,7 +56,7 @@ client = OpenAI(
 This initializes the API client using:
 
 * OpenRouter's API endpoint
-* The API key stored in the environment variable
+* The API key stored in the environment variable (extracted from the .env file, not directly pasted in the code)
 
 Using environment variables prevents exposing sensitive credentials in source code.
 
@@ -114,7 +118,7 @@ Runs indefinitely until the user exits.
 user_input = input()
 ```
 
-Reads input from the terminal.
+Reads the user's input from the terminal.
 
 ---
 
@@ -138,7 +142,7 @@ if (user_input == "\\reset"):
     continue
 ```
 
-Clears conversation history and starts a fresh conversation.
+The `\reset` message clears conversation history and starts a fresh conversation.
 
 ---
 
@@ -177,9 +181,9 @@ response = client.responses.create(
 
 * `model` specifies which model to use.
 * `input` contains the complete conversation history.
-* `store=False` prevents storing conversation data.
+* `store=False` prevents storing conversation data on the server, as it is not required for our model.
 
-The full history is sent each time so the model can maintain context.
+The full history (or last 100 messages, whichever is smaller) is sent each time so the model can maintain context.
 
 ---
 
@@ -245,17 +249,6 @@ Ensures the chatbot starts only when the script is run directly.
 * Token usage reporting (`\tokens`)
 * Conversation history tracking
 * Context preservation across API calls
-
----
-
-## Future Improvements
-
-1. Preserve the system prompt after using `\reset`.
-2. Save conversations to a file.
-3. Add streaming responses.
-4. Improve error handling.
-5. Allow model selection from the terminal.
-6. Add colored terminal output for better user experience.
 
 ---
 
