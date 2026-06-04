@@ -55,7 +55,7 @@ def run_chatbot():
         # TODO: extract the assistant's reply
         reply = response.output_text
         # TODO: append the assistant turn to messages
-        messages.append({"role": "system", "content": reply})
+        messages.append({"role": "assistant", "content": reply})
         # TODO: print the reply
         print(reply)
 
